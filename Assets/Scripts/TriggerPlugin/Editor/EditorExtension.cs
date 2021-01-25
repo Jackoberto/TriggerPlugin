@@ -1,13 +1,23 @@
-﻿using UnityEditor;
+﻿using System.Linq;
+using System.Reflection;
+using UnityEditor;
 using UnityEngine;
 
-namespace TriggerPlugin
+namespace TriggerPlugin.Editor
 {
     public static class EditorExtension
     {
         public static int DrawBitMaskField (Rect aPosition, int aMask, System.Type aType, GUIContent aLabel)
         {
             var itemNames = System.Enum.GetNames(aType);
+            if (aType.GetCustomAttributes<DrawAsNumber>().ToArray().Length > 0)
+            {
+                for (var i = 0; i < itemNames.Length; i++)
+                {
+                    itemNames[i] = StringToNumber.ToNumber(itemNames[i]);
+                }
+            }
+            
             var itemValues = System.Enum.GetValues(aType) as int[];
          
             int val = aMask;

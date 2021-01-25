@@ -7,13 +7,13 @@ namespace TriggerPlugin
     public class TriggerEvent : MonoBehaviour
     {
         public UnityEvent<GameObject> getGameObject;
-        [TagWrapper] public string[] tagsToCompare;
+        [TagWrapper] public string[] tagsToCompare = new string[1];
         [BitMask(typeof(CollisionType))]
-        public CollisionType isCollisionType;
-        [BitMask(typeof(Dimension))] 
-        public Dimension dimension;
+        public CollisionType isCollisionType = CollisionType.Trigger;
+        [BitMask(typeof(Dimension))] [DrawAsNumber]
+        public Dimension dimension = Dimension.ThreeD;
         [BitMask(typeof(StateToTrigger))]
-        public StateToTrigger stateToTriggerOn;
+        public StateToTrigger stateToTriggerOn = StateToTrigger.Enter;
 
         #region Trigger2D
 
@@ -196,7 +196,7 @@ namespace TriggerPlugin
             Stay = 1<<2
         }
     
-        [Flags]
+        [Flags] [DrawAsNumber]
         public enum Dimension
         {
             TwoD = 1<<0,
